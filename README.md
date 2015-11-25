@@ -15,3 +15,13 @@ rc <input>.rc
 ```
 link -dll -noentry -out:<out>.dll <input>.res
 ```
+
+# Register the manifest to the system:
+```
+wevtutil im <manifest_file>.man /rf:"<full_path_to_noentry_dll>" /mf:"<full_path_to_noentry_dll>"
+```
+
+# Remove the manifest from the system:
+```
+wevtutil um <manifest_file>.man
+```
