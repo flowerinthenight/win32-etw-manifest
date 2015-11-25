@@ -1,17 +1,17 @@
 # win32-etw-manifest
 Generic ETW manifest file with a "key: value" format for events.
 
-# How to compile manifest file:
+# How to compile the manifest file:
 ```
-VS command prompt> mc -um <name>.man
+mc -um <name>.man
 ```
 
-# Compile rc file to res:
+# Compile .rc to .res:
 ```
 rc <input>.rc
 ```
 
-# Create a dll from the res file:
+# Create a dll from the .res file:
 ```
 link -dll -noentry -out:<out>.dll <input>.res
 ```
