@@ -24,13 +24,13 @@ using Microsoft.Win32;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 
-    public class ProviderJyTrace : IDisposable
+    public static class ProviderJyTrace
     {
         //
         // Provider JyTrace Event Count 25
         //
 
-        internal EventProviderVersionTwo m_provider = new EventProviderVersionTwo(new Guid("277c604b-1962-47fa-9307-7ce0855dfea6"));
+        internal static EventProviderVersionTwo m_provider = new EventProviderVersionTwo(new Guid("277c604b-1962-47fa-9307-7ce0855dfea6"));
         //
         // Task :  eventGUIDs
         //
@@ -38,48 +38,34 @@ using System.Security.Principal;
         //
         // Event Descriptors
         //
-        protected EventDescriptor FunctionEntry;
-        protected EventDescriptor FunctionExit;
-        protected EventDescriptor InfoW;
-        protected EventDescriptor ErrorW;
-        protected EventDescriptor InfoA;
-        protected EventDescriptor ErrorA;
-        protected EventDescriptor WideStrInfo;
-        protected EventDescriptor WideStrError;
-        protected EventDescriptor AnsiStrInfo;
-        protected EventDescriptor AnsiStrError;
-        protected EventDescriptor HresultError;
-        protected EventDescriptor LastError;
-        protected EventDescriptor PointerInfo;
-        protected EventDescriptor PointerError;
-        protected EventDescriptor NumberInfo;
-        protected EventDescriptor NumberError;
-        protected EventDescriptor HexInfo;
-        protected EventDescriptor HexError;
-        protected EventDescriptor BoolInfo;
-        protected EventDescriptor BoolError;
-        protected EventDescriptor GuidInfo;
-        protected EventDescriptor GuidError;
-        protected EventDescriptor FloatInfo;
-        protected EventDescriptor FloatError;
-        protected EventDescriptor Simple;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                m_provider.Dispose();
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        private static EventDescriptor FunctionEntry;
+        private static EventDescriptor FunctionExit;
+        private static EventDescriptor InfoW;
+        private static EventDescriptor ErrorW;
+        private static EventDescriptor InfoA;
+        private static EventDescriptor ErrorA;
+        private static EventDescriptor WideStrInfo;
+        private static EventDescriptor WideStrError;
+        private static EventDescriptor AnsiStrInfo;
+        private static EventDescriptor AnsiStrError;
+        private static EventDescriptor HresultError;
+        private static EventDescriptor LastError;
+        private static EventDescriptor PointerInfo;
+        private static EventDescriptor PointerError;
+        private static EventDescriptor NumberInfo;
+        private static EventDescriptor NumberError;
+        private static EventDescriptor HexInfo;
+        private static EventDescriptor HexError;
+        private static EventDescriptor BoolInfo;
+        private static EventDescriptor BoolError;
+        private static EventDescriptor GuidInfo;
+        private static EventDescriptor GuidError;
+        private static EventDescriptor FloatInfo;
+        private static EventDescriptor FloatError;
+        private static EventDescriptor Simple;        
 
 
-        public ProviderJyTrace()
+        static ProviderJyTrace()
         {
             unchecked
             {
@@ -283,7 +269,7 @@ using System.Security.Principal;
         //
         // Event method for Simple
         //
-        public bool EventWriteSimple(string Module, string File, string Function, string Key, string Value)
+        public static bool EventWriteSimple(string Module, string File, string Function, string Key, string Value)
         {
 
             if (!m_provider.IsEnabled())
