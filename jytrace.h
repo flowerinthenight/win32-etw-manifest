@@ -215,7 +215,7 @@ Remarks:
 #endif
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 //+
-// Provider JyTrace Event Count 24
+// Provider JyTrace Event Count 25
 //+
 EXTERN_C __declspec(selectany) const GUID ProviderJyTrace = {0x277c604b, 0x1962, 0x47fa, {0x93, 0x07, 0x7c, 0xe0, 0x85, 0x5d, 0xfe, 0xa6}};
 
@@ -280,6 +280,8 @@ EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR FloatInfo = {0x7b, 0x0, 0x
 #define FloatInfo_value 0x7b
 EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR FloatError = {0x7c, 0x0, 0x0, 0x2, 0x0, 0x0, 0x2};
 #define FloatError_value 0x7c
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR Simple = {0x7d, 0x0, 0x0, 0x5, 0x0, 0x0, 0x2};
+#define Simple_value 0x7d
 
 //
 // Note on Generate Code from Manifest Windows Vista and above
@@ -745,6 +747,20 @@ Remarks:
 #define EventWriteFloatError(Module, File, Function, Key, Value)\
         EventEnabledFloatError() ?\
         Template_zsszf(JyTraceHandle, &FloatError, Module, File, Function, Key, Value)\
+        : ERROR_SUCCESS\
+
+//
+// Enablement check macro for Simple
+//
+
+#define EventEnabledSimple() ((JyTraceEnableBits[0] & 0x00000002) != 0)
+
+//
+// Event Macro for Simple
+//
+#define EventWriteSimple(Module, File, Function, Key, Value)\
+        EventEnabledSimple() ?\
+        Template_zzzzz(JyTraceHandle, &Simple, Module, File, Function, Key, Value)\
         : ERROR_SUCCESS\
 
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
@@ -1221,6 +1237,51 @@ Template_zsszf(
 }
 #endif
 
+//
+//Template from manifest : TemplateNetSimple
+//
+#ifndef Template_zzzzz_def
+#define Template_zzzzz_def
+ETW_INLINE
+ULONG
+Template_zzzzz(
+    _In_ REGHANDLE RegHandle,
+    _In_ PCEVENT_DESCRIPTOR Descriptor,
+    _In_opt_ PCWSTR  _Arg0,
+    _In_opt_ PCWSTR  _Arg1,
+    _In_opt_ PCWSTR  _Arg2,
+    _In_opt_ PCWSTR  _Arg3,
+    _In_opt_ PCWSTR  _Arg4
+    )
+{
+#define ARGUMENT_COUNT_zzzzz 5
+
+    EVENT_DATA_DESCRIPTOR EventData[ARGUMENT_COUNT_zzzzz];
+
+    EventDataDescCreate(&EventData[0], 
+                        (_Arg0 != NULL) ? _Arg0 : L"NULL",
+                        (_Arg0 != NULL) ? (ULONG)((wcslen(_Arg0) + 1) * sizeof(WCHAR)) : (ULONG)sizeof(L"NULL"));
+
+    EventDataDescCreate(&EventData[1], 
+                        (_Arg1 != NULL) ? _Arg1 : L"NULL",
+                        (_Arg1 != NULL) ? (ULONG)((wcslen(_Arg1) + 1) * sizeof(WCHAR)) : (ULONG)sizeof(L"NULL"));
+
+    EventDataDescCreate(&EventData[2], 
+                        (_Arg2 != NULL) ? _Arg2 : L"NULL",
+                        (_Arg2 != NULL) ? (ULONG)((wcslen(_Arg2) + 1) * sizeof(WCHAR)) : (ULONG)sizeof(L"NULL"));
+
+    EventDataDescCreate(&EventData[3], 
+                        (_Arg3 != NULL) ? _Arg3 : L"NULL",
+                        (_Arg3 != NULL) ? (ULONG)((wcslen(_Arg3) + 1) * sizeof(WCHAR)) : (ULONG)sizeof(L"NULL"));
+
+    EventDataDescCreate(&EventData[4], 
+                        (_Arg4 != NULL) ? _Arg4 : L"NULL",
+                        (_Arg4 != NULL) ? (ULONG)((wcslen(_Arg4) + 1) * sizeof(WCHAR)) : (ULONG)sizeof(L"NULL"));
+
+    return EventWrite(RegHandle, Descriptor, ARGUMENT_COUNT_zzzzz, EventData);
+}
+#endif
+
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 #if defined(__cplusplus)
@@ -1247,3 +1308,4 @@ Template_zsszf(
 #define MSG_jenkins_event_113_message        0xB0000079L
 #define MSG_jenkins_event_123_message        0xB000007BL
 #define MSG_jenkins_event_124_message        0xB000007CL
+#define MSG_JyTrace_event_125_message        0xB000007DL
