@@ -32,6 +32,6 @@ wevtutil im <manifest_file>.man /rf:"<full_path_to_noentry_dll>" /mf:"<full_path
 wevtutil um <manifest_file>.man
 ```
 
-# Licence
+# License
 
 [The MIT License](./LICENSE.md)
