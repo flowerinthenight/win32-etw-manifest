@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include <Windows.h>
 
-typedef void(__stdcall *FnTrace)(wchar_t*, wchar_t*, wchar_t*, wchar_t*, wchar_t*);
+typedef void(__stdcall *FnTrace)(wchar_t*);
 
 int main()
 {
@@ -14,7 +14,7 @@ int main()
         FnTrace pfnTrace = (FnTrace)GetProcAddress(hLib, "ETWTrace");
 
         if (pfnTrace) {
-            pfnTrace(L"mod", L"file", L"func", L"key", L"value");
+            pfnTrace(L"Hello world!");
         }
 
         FreeLibrary(hLib);

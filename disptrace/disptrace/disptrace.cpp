@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "..\..\jytrace.h"
 
-void __stdcall ETWTrace(wchar_t *szMod, wchar_t *szFile, wchar_t *szFn, wchar_t *szKey, wchar_t *szVal)
+void __stdcall ETWTrace(wchar_t *szLine)
 {
-    EventWriteSimple(szMod, szFile, szFn, szKey, szVal);
+    EventWriteSingle(szLine);
 }
