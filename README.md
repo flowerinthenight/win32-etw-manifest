@@ -1,6 +1,7 @@
 # win32-etw-manifest
 
 Generic ETW manifest file with a "key: value" format for events.
+Check out [this blog post](http://flowerinthenight.com/blog/2016/03/01/etw-part1) for more information.
 
 ### How to compile the manifest file
 
